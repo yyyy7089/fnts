@@ -1,0 +1,132 @@
+<html>
+    <head>
+        <title>From Nothing to Something</title>
+        <style>
+            #g0_b{visibility:hidden}
+            #u1_b{visibility:hidden}
+            #u2_b{visibility:hidden}
+            #u3_b{visibility:hidden}
+            #u4_b{visibility:hidden}
+            #u5_b{visibility:hidden}
+        </style>
+    </head>
+    <body>
+        <input type="button" onclick="clickedbutton()" value="Click"/></input>
+        <p id=r1>you have 0 Click Points.</p>
+        <p id=r2></p>
+        <p id=r3></p>
+        <p id=r4></p>
+        <p id=g0_b><input type="button" onclick="generateGP()" value="generate GP"></input></p>
+        <p id=g0></p>
+        <p id=u1_b><input type="button" onclick="upgrade1()" value="Upgrade 1: CP Gain"></input></p>
+        <p id=u1></p>
+        <p id=u2_b><input type="button" onclick="upgrade2()" value="Upgrade 2: CP Gain Gain"></input></p>
+        <p id=u2></p>
+        <p id=u3_b><input type="button" onclick="upgrade3()" value="Upgrade 3: Better CP Gain"></input></p>
+        <p id=u3></p>
+        <p id=u4_b><input type="button" onclick="upgrade4()" value="Upgrade 4: Generation"></input></p>
+        <p id=u4></p>
+        <p id=u5_b><input type="button" onclick="upgrade5()" value="Upgrade 5: GP Efficiency"></input></p>
+        <p id=u5></p>
+        <script> //version pre-alpha 1.11
+        var totalclicked=0, clickpoints=0, totalclickpoints=0, cpgain=1;
+        var contentunlockpricelist=[20,50,250,1000,15000,100000], contentunlockpriceindex=0;
+        var up1lvl=0, up1price=50, up2lvl=0, up2price=200, up3lvl=0, up3price=450, up4lvl=0, up4price=5000, up5lvl=0, up5price=10000;
+        var generationpoints=0, gpgain=0;
+        function clickedbutton(){
+            clickpoints+=cpgain;
+            totalclickpoints+=cpgain;
+            totalclicked+=1;
+            update();
+        }
+        function generateGP(){
+            generationpoints+=gpgain;
+            update();
+        }
+        function upgrade1(){
+            if(clickpoints>=up1price){
+                clickpoints-=up1price;
+                up1lvl+=1;
+                up1price*=2;
+                update();
+            }
+        }
+        function upgrade2(){
+            if(clickpoints>=up2price){
+                clickpoints-=up2price;
+                up2lvl+=1;
+                up2price*=5;
+                update();
+            }
+        }
+        function upgrade3(){
+            if(clickpoints>=up3price){
+                clickpoints-=up3price;
+                up3lvl+=1;
+                up3price*=3;
+                update();
+            }
+        }
+        function upgrade4(){
+            if(clickpoints>=up4price){
+                clickpoints-=up4price;
+                up4lvl+=1;
+                up4price*=10;
+                update();
+            }
+        }
+        function upgrade5(){
+            if(clickpoints>=up5price){
+                clickpoints-=up5price;
+                up5lvl+=1;
+                up5price*=3;
+                update();
+            }
+        }
+        function update(){
+            cpgain=Math.round(((1+up1lvl*(up2lvl+1))+up3lvl*10)*((generationpoints*(1+up5lvl*0.5)+1)));
+            gpgain=up4lvl*0.01;
+            if(totalclickpoints>=contentunlockpricelist[contentunlockpriceindex]){
+                contentunlockpriceindex+=1;
+                if(contentunlockpriceindex<contentunlockpricelist.length){
+                    document.getElementById("r4").innerHTML = "next content unlocked at "+contentunlockpricelist[contentunlockpriceindex]+" total click points.";
+                }
+                else{
+                    document.getElementById("r4").innerHTML = "you have unlocked every contents (for now!)";
+                }
+            }
+            document.getElementById("r1").innerHTML = "you have "+clickpoints+" Click Points. (+"+cpgain+"/Click)";
+            if(totalclickpoints>=5){
+                document.getElementById("r2").innerHTML = "you have "+totalclickpoints+" Total Click Points.";
+            }
+            if(totalclickpoints>=20){
+                document.getElementById("r3").innerHTML = "you have clicked the button total of "+totalclicked+" times.";
+            }
+            if(totalclickpoints>=50){
+                document.getElementById("u1").innerHTML = "increase cp gain by "+ (up2lvl+1) +" per level (current: +" + (up1lvl*(up2lvl+1)) + ") price: "+up1price;
+                document.getElementById("u1_b").style.visibility='visible';
+            }
+            if(totalclickpoints>=250){
+                document.getElementById("u2").innerHTML = "increase upgrade 1 efficiency by 1 per level (current: +" + up2lvl + ") price: "+up2price;
+                document.getElementById("u2_b").style.visibility='visible';
+            }
+            if(totalclickpoints>=1000){
+                document.getElementById("u3").innerHTML = "increase cp gain by 10 per level (current: +"+(up3lvl*10)+") price: "+up3price;
+                document.getElementById("u3_b").style.visibility='visible';
+            }
+            if(totalclickpoints>=15000){
+                document.getElementById("u4").innerHTML = up4lvl==0?"allowes you to get generation points! (gp boosts cp gain) price: 5000":"increase gp gain by 0.01 per level (current: " + (up4lvl*0.01) + ") price: "+up4price;
+                document.getElementById("u4_b").style.visibility='visible';
+            }
+            if(totalclickpoints>=100000){
+                document.getElementById("u5").innerHTML = "increase gp efficiency by .5 per level (current: +"+(0.5*up5lvl)+") price: "+up5price;
+                document.getElementById("u5_b").style.visibility='visible';
+            }
+            if(up4lvl!=0){
+                document.getElementById("g0").innerHTML = "you have "+generationpoints.toFixed(2)+" Generation Points.";
+                document.getElementById("g0_b").style.visibility='visible';
+            }
+        }
+        </script>
+    </body>
+</html>
