@@ -8,6 +8,7 @@
             #u3_b{visibility:hidden}
             #u4_b{visibility:hidden}
             #u5_b{visibility:hidden}
+            #evo{visibility:hidden}
         </style>
     </head>
     <body>
@@ -16,6 +17,10 @@
         <p id=r2></p>
         <p id=r3></p>
         <p id=r4></p>
+        <p id=r5></p>
+        <p id=r6></p>
+        <p id=evo><input type="button" onclick="evolve()" value="EVOLVE"></input></p>
+        <p id=evo_t></p>
         <p id=g0_b><input type="button" onclick="generateGP()" value="generate GP"></input></p>
         <p id=g0></p>
         <p id=u1_b><input type="button" onclick="upgrade1()" value="Upgrade 1: CP Gain"></input></p>
@@ -28,11 +33,12 @@
         <p id=u4></p>
         <p id=u5_b><input type="button" onclick="upgrade5()" value="Upgrade 5: GP Efficiency"></input></p>
         <p id=u5></p>
-        <script> //version pre-alpha 1.11
+        <script> //version pre-alpha 2.4
         var totalclicked=0, clickpoints=0, totalclickpoints=0, cpgain=1;
-        var contentunlockpricelist=[20,50,250,1000,15000,100000], contentunlockpriceindex=0;
+        var contentunlockpricelist=[20,50,250,1000,15000,100000,10000000], contentunlockpriceindex=0;
         var up1lvl=0, up1price=50, up2lvl=0, up2price=200, up3lvl=0, up3price=450, up4lvl=0, up4price=5000, up5lvl=0, up5price=10000;
         var generationpoints=0, gpgain=0;
+        var evolved=false, evolvepoints=0;
         function clickedbutton(){
             clickpoints+=cpgain;
             totalclickpoints+=cpgain;
@@ -83,8 +89,25 @@
                 update();
             }
         }
+        function evolve(){
+            up1lvl=0;
+            up2lvl=0;
+            up3lvl=0;
+            up4lvl=0;
+            up5lvl=0;
+            up1price=50;
+            up2price=200;
+            up3price=450;
+            up4price=5000;
+            up5price=10000;
+            evolvepoints+=Math.round(Math.log(clickpoints)/Math.LN10);
+            clickpoints=0;
+            totalclickpoints=0;
+            evolved=true;
+            update()
+        }
         function update(){
-            cpgain=Math.round(((1+up1lvl*(up2lvl+1))+up3lvl*10)*((generationpoints*(1+up5lvl*0.5)+1)));
+            cpgain=Math.round(((1+up1lvl*(up2lvl+1))+up3lvl*10)*((generationpoints*(1+up5lvl*0.5)+1))*(Math.sqrt(evolvepoints)+1));
             gpgain=up4lvl*0.01;
             if(totalclickpoints>=contentunlockpricelist[contentunlockpriceindex]){
                 contentunlockpriceindex+=1;
@@ -96,36 +119,76 @@
                 }
             }
             document.getElementById("r1").innerHTML = "you have "+clickpoints+" Click Points. (+"+cpgain+"/Click)";
-            if(totalclickpoints>=5){
+            if(totalclickpoints>=5 || evolved){
                 document.getElementById("r2").innerHTML = "you have "+totalclickpoints+" Total Click Points.";
             }
-            if(totalclickpoints>=20){
+            if(totalclickpoints>=20 || evolved){
                 document.getElementById("r3").innerHTML = "you have clicked the button total of "+totalclicked+" times.";
             }
             if(totalclickpoints>=50){
                 document.getElementById("u1").innerHTML = "increase cp gain by "+ (up2lvl+1) +" per level (current: +" + (up1lvl*(up2lvl+1)) + ") price: "+up1price;
                 document.getElementById("u1_b").style.visibility='visible';
             }
+            else{
+                document.getElementById("u1").innerHTML = "";
+                document.getElementById("u1_b").style.visibility='hidden';
+            }
             if(totalclickpoints>=250){
                 document.getElementById("u2").innerHTML = "increase upgrade 1 efficiency by 1 per level (current: +" + up2lvl + ") price: "+up2price;
                 document.getElementById("u2_b").style.visibility='visible';
+            }
+            else{
+                document.getElementById("u2").innerHTML = "";
+                document.getElementById("u2_b").style.visibility='hidden';
             }
             if(totalclickpoints>=1000){
                 document.getElementById("u3").innerHTML = "increase cp gain by 10 per level (current: +"+(up3lvl*10)+") price: "+up3price;
                 document.getElementById("u3_b").style.visibility='visible';
             }
+            else{
+                document.getElementById("u3").innerHTML = "";
+                document.getElementById("u3_b").style.visibility='hidden';
+            }
             if(totalclickpoints>=15000){
                 document.getElementById("u4").innerHTML = up4lvl==0?"allowes you to get generation points! (gp boosts cp gain) price: 5000":"increase gp gain by 0.01 per level (current: " + (up4lvl*0.01) + ") price: "+up4price;
                 document.getElementById("u4_b").style.visibility='visible';
             }
+            else{
+                document.getElementById("u4").innerHTML = "";
+                document.getElementById("u4_b").style.visibility='hidden';
+            }
             if(totalclickpoints>=100000){
-                document.getElementById("u5").innerHTML = "increase gp efficiency by .5 per level (current: +"+(0.5*up5lvl)+") price: "+up5price;
+                document.getElementById("u5").innerHTML = "increase GP efficiency by .5 per level (current: +"+(0.5*up5lvl)+") price: "+up5price;
                 document.getElementById("u5_b").style.visibility='visible';
+            }
+            else{
+                document.getElementById("u5").innerHTML = "";
+                document.getElementById("u5_b").style.visibility='hidden';
+            }
+            if(totalclickpoints>=10000000){
+                document.getElementById("evo").style.visibility='visible';
+                document.getElementById("evo_t").innerHTML = "reset all your progression to get "+(Math.round(Math.log(clickpoints)/Math.LN10))+" Evolve Points. (EP boosts CP gain)";
+            }
+            else if(evolved){
+                document.getElementById("evo").style.visibility='visible';
+                document.getElementById("evo_t").innerHTML = "you need at least 10000000 CP to evolve.";
             }
             if(up4lvl!=0){
                 document.getElementById("g0").innerHTML = "you have "+generationpoints.toFixed(2)+" Generation Points.";
                 document.getElementById("g0_b").style.visibility='visible';
             }
+            else if(evolved){
+                document.getElementById("g0").innerHTML = "you have "+generationpoints.toFixed(2)+" Generation Points. (buy upgrade 4 to gain)";
+                document.getElementById("u5_b").style.visibility='hidden';
+            }
+            if(evolved){
+                document.getElementById("r5").innerHTML = "you have "+evolvepoints+" Evolve Points.";
+                document.getElementById("r6").innerHTML = "your EP boosts CP gain by "+((Math.sqrt(evolvepoints)).toFixed(2))+".";
+            }
+        }
+        function cheat(){
+            clickpoints=10000000000
+            totalclickpoints=10000000000
         }
         </script>
     </body>
