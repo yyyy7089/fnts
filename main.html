@@ -9,6 +9,9 @@
             #u4_b{visibility:hidden}
             #u5_b{visibility:hidden}
             #evo{visibility:hidden}
+            #ue1_b{visibility:hidden}
+            #ue2_b{visibility:hidden}
+            #ue3_b{visibility:hidden}
         </style>
     </head>
     <body>
@@ -33,24 +36,43 @@
         <p id=u4></p>
         <p id=u5_b><input type="button" onclick="upgrade5()" value="Upgrade 5: GP Efficiency"></input></p>
         <p id=u5></p>
-        <script> //version pre-alpha 2.4
+        <p id=ue0></p>
+        <p id=ue1_b><input type="button" onclick="ev_upgrade1()" value="Evolve Upgrade 1: Max CP Upgrade Level"></input></p>
+        <p id=ue1></p>
+        <p id=ue2_b><input type="button" onclick="ev_upgrade2()" value="Evolve Upgrade 2: CP+=GP"></input></p>
+        <p id=ue2></p>
+        <p id=ue3_b><input type="button" onclick="ev_upgrade3()" value="Evolve Upgrade 3: CP Gain Gain Gain"></input></p>
+        <p id=ue3></p>
+        <script>
         var totalclicked=0, clickpoints=0, totalclickpoints=0, cpgain=1;
         var contentunlockpricelist=[20,50,250,1000,15000,100000,10000000], contentunlockpriceindex=0;
         var up1lvl=0, up1price=50, up2lvl=0, up2price=200, up3lvl=0, up3price=450, up4lvl=0, up4price=5000, up5lvl=0, up5price=10000;
         var generationpoints=0, gpgain=0;
         var evolved=false, evolvepoints=0;
+        var maxlvl_upgrade1=15, maxlvl_upgrade2=7, maxlvl_upgrade3=10, maxlvl_upgrade4=5, maxlvl_upgrade5=5;
+        var ev_up1price=5, ev_up1lvl=0, ev_up2price=3, ev_up2lvl=0, ev_up3price=10, ev_up3lvl=0;
         function clickedbutton(){
             clickpoints+=cpgain;
             totalclickpoints+=cpgain;
             totalclicked+=1;
-            update();
+            if(ev_up2lvl==0){
+                update();
+            }
+            else{
+                if(Math.random()<=0.1*ev_up2lvl){
+                    generateGP();
+                }
+                else{
+                    update();
+                }
+            }
         }
         function generateGP(){
             generationpoints+=gpgain;
             update();
         }
         function upgrade1(){
-            if(clickpoints>=up1price){
+            if(clickpoints>=up1price && up1lvl<maxlvl_upgrade1){
                 clickpoints-=up1price;
                 up1lvl+=1;
                 up1price*=2;
@@ -58,7 +80,7 @@
             }
         }
         function upgrade2(){
-            if(clickpoints>=up2price){
+            if(clickpoints>=up2price && up2lvl<maxlvl_upgrade2){
                 clickpoints-=up2price;
                 up2lvl+=1;
                 up2price*=5;
@@ -66,7 +88,7 @@
             }
         }
         function upgrade3(){
-            if(clickpoints>=up3price){
+            if(clickpoints>=up3price && up3lvl<maxlvl_upgrade3){
                 clickpoints-=up3price;
                 up3lvl+=1;
                 up3price*=3;
@@ -74,7 +96,7 @@
             }
         }
         function upgrade4(){
-            if(clickpoints>=up4price){
+            if(clickpoints>=up4price && up4lvl<maxlvl_upgrade4){
                 clickpoints-=up4price;
                 up4lvl+=1;
                 up4price*=10;
@@ -82,37 +104,70 @@
             }
         }
         function upgrade5(){
-            if(clickpoints>=up5price){
+            if(clickpoints>=up5price && up5lvl<maxlvl_upgrade5){
                 clickpoints-=up5price;
                 up5lvl+=1;
                 up5price*=3;
                 update();
             }
         }
+        function ev_upgrade1(){
+            if(evolvepoints>=ev_up1price){
+                evolvepoints-=ev_up1price;
+                ev_up1lvl+=1;
+                ev_up1price*=2;
+                update();
+            }
+        }
+        function ev_upgrade2(){
+            if(evolvepoints>=ev_up2price){
+                evolvepoints-=ev_up2price;
+                ev_up2lvl+=1;
+                ev_up2price*=5;
+                update();
+            }
+        }
+        function ev_upgrade3(){
+            if(evolvepoints>=ev_up3price){
+                evolvepoints-=ev_up3price;
+                ev_up3lvl+=1;
+                ev_up3price*=10;
+                update();
+            }
+        }
         function evolve(){
-            up1lvl=0;
-            up2lvl=0;
-            up3lvl=0;
-            up4lvl=0;
-            up5lvl=0;
-            up1price=50;
-            up2price=200;
-            up3price=450;
-            up4price=5000;
-            up5price=10000;
-            evolvepoints+=Math.round(Math.log(clickpoints)/Math.LN10);
-            clickpoints=0;
-            totalclickpoints=0;
-            evolved=true;
-            update()
+            if(clickpoints>=10000000){
+                contentunlockpriceindex=0;
+                up1lvl=0;
+                up2lvl=0;
+                up3lvl=0;
+                up4lvl=0;
+                up5lvl=0;
+                up1price=50;
+                up2price=200;
+                up3price=450;
+                up4price=5000;
+                up5price=10000;
+                evolvepoints+=Math.round(Math.log(clickpoints)/Math.LN10);
+                clickpoints=0;
+                totalclickpoints=0;
+                evolved=true;
+                update()
+            }
         }
         function update(){
-            cpgain=Math.round(((1+up1lvl*(up2lvl+1))+up3lvl*10)*((generationpoints*(1+up5lvl*0.5)+1))*(Math.sqrt(evolvepoints)+1));
+            cpgain=Math.round(((1+up1lvl*(up2lvl*(ev_up3lvl*0.25+1)+1))+up3lvl*10)*((generationpoints*(1+up5lvl*0.5)+1))*(Math.sqrt(evolvepoints)+1));
             gpgain=up4lvl*0.01;
+            maxlvl_upgrade1=15+ev_up1lvl;
+            maxlvl_upgrade2=7+ev_up1lvl;
+            maxlvl_upgrade3=10+ev_up1lvl;
+            maxlvl_upgrade4=5+ev_up1lvl;
+            maxlvl_upgrade5=10+ev_up1lvl;
             if(totalclickpoints>=contentunlockpricelist[contentunlockpriceindex]){
                 contentunlockpriceindex+=1;
                 if(contentunlockpriceindex<contentunlockpricelist.length){
                     document.getElementById("r4").innerHTML = "next content unlocked at "+contentunlockpricelist[contentunlockpriceindex]+" total click points.";
+                    update()
                 }
                 else{
                     document.getElementById("r4").innerHTML = "you have unlocked every contents (for now!)";
@@ -126,7 +181,12 @@
                 document.getElementById("r3").innerHTML = "you have clicked the button total of "+totalclicked+" times.";
             }
             if(totalclickpoints>=50){
-                document.getElementById("u1").innerHTML = "increase cp gain by "+ (up2lvl+1) +" per level (current: +" + (up1lvl*(up2lvl+1)) + ") price: "+up1price;
+                if(up1lvl<maxlvl_upgrade1){
+                    document.getElementById("u1").innerHTML = "increase cp gain by "+ (ev_up3lvl==0?up2lvl+1:((ev_up3lvl*0.25+1)*up2lvl+1).toFixed(2)) +" per level (current: +" + Math.round(up1lvl*(up2lvl*(ev_up3lvl*0.25+1)+1)) + ") price: "+up1price;
+                }
+                else{
+                    document.getElementById("u1").innerHTML = "increase cp gain by "+ (ev_up3lvl==0?up2lvl+1:((ev_up3lvl*0.25+1)*up2lvl+1).toFixed(2)) +" per level (current: +" + Math.round(up1lvl*(up2lvl*(ev_up3lvl*0.25+1)+1)) + ") (MAX LEVEL)";
+                }
                 document.getElementById("u1_b").style.visibility='visible';
             }
             else{
@@ -134,7 +194,12 @@
                 document.getElementById("u1_b").style.visibility='hidden';
             }
             if(totalclickpoints>=250){
-                document.getElementById("u2").innerHTML = "increase upgrade 1 efficiency by 1 per level (current: +" + up2lvl + ") price: "+up2price;
+                if(up2lvl<maxlvl_upgrade2){
+                    document.getElementById("u2").innerHTML = "increase upgrade 1 efficiency by "+(ev_up3lvl==0?1:(ev_up3lvl*0.25+1).toFixed(2))+" per level (current: +" + (ev_up3lvl==0?up2lvl:((ev_up3lvl*0.25+1)*up2lvl).toFixed(2)) + ") price: "+up2price;
+                }
+                else{
+                    document.getElementById("u2").innerHTML = "increase upgrade 1 efficiency by "+(ev_up3lvl==0?1:(ev_up3lvl*0.25+1).toFixed(2))+" per level (current: +" + (ev_up3lvl==0?up2lvl:((ev_up3lvl*0.25+1)*up2lvl).toFixed(2)) + ") (MAX LEVEL)";
+                }
                 document.getElementById("u2_b").style.visibility='visible';
             }
             else{
@@ -142,7 +207,12 @@
                 document.getElementById("u2_b").style.visibility='hidden';
             }
             if(totalclickpoints>=1000){
-                document.getElementById("u3").innerHTML = "increase cp gain by 10 per level (current: +"+(up3lvl*10)+") price: "+up3price;
+                if(up3lvl<maxlvl_upgrade3){
+                    document.getElementById("u3").innerHTML = "increase cp gain by 10 per level (current: +"+(up3lvl*10)+") price: "+up3price;
+                }
+                else{
+                    document.getElementById("u3").innerHTML = "increase cp gain by 10 per level (current: +"+(up3lvl*10)+") (MAX LEVEL)";
+                }
                 document.getElementById("u3_b").style.visibility='visible';
             }
             else{
@@ -150,7 +220,12 @@
                 document.getElementById("u3_b").style.visibility='hidden';
             }
             if(totalclickpoints>=15000){
-                document.getElementById("u4").innerHTML = up4lvl==0?"allowes you to get generation points! (gp boosts cp gain) price: 5000":"increase gp gain by 0.01 per level (current: " + (up4lvl*0.01) + ") price: "+up4price;
+                if(up4lvl<maxlvl_upgrade4){
+                    document.getElementById("u4").innerHTML = up4lvl==0?"allowes you to get generation points! (GP boosts CP gain) price: 5000":"increase GP gain per click by 0.01 per level (current: " + (up4lvl*0.01) + ") price: "+up4price;
+                }
+                else{
+                    document.getElementById("u4").innerHTML = "increase GP gain by 0.01 per level (current: " + (up4lvl*0.01) + ") (MAX LEVEL)";
+                }
                 document.getElementById("u4_b").style.visibility='visible';
             }
             else{
@@ -158,6 +233,12 @@
                 document.getElementById("u4_b").style.visibility='hidden';
             }
             if(totalclickpoints>=100000){
+                if(up5lvl<maxlvl_upgrade5){
+                    document.getElementById("u5").innerHTML = "increase GP efficiency by .5 per level (current: +"+(0.5*up5lvl)+") price: "+up5price;
+                }
+                else{
+                    document.getElementById("u5").innerHTML = "increase GP efficiency by .5 per level (current: +"+(0.5*up5lvl)+") (MAX LEVEL)";
+                }
                 document.getElementById("u5").innerHTML = "increase GP efficiency by .5 per level (current: +"+(0.5*up5lvl)+") price: "+up5price;
                 document.getElementById("u5_b").style.visibility='visible';
             }
@@ -179,16 +260,26 @@
             }
             else if(evolved){
                 document.getElementById("g0").innerHTML = "you have "+generationpoints.toFixed(2)+" Generation Points. (buy upgrade 4 to gain)";
-                document.getElementById("u5_b").style.visibility='hidden';
+                document.getElementById("g0_b").style.visibility='hidden';
             }
             if(evolved){
                 document.getElementById("r5").innerHTML = "you have "+evolvepoints+" Evolve Points.";
                 document.getElementById("r6").innerHTML = "your EP boosts CP gain by "+((Math.sqrt(evolvepoints)).toFixed(2))+".";
+                document.getElementById("ue0").innerHTML = "Evolve Upgrades don't reset on evolve.";
+                document.getElementById("ue1").innerHTML = "increase CP upgrades' max level by 1 each (current: +"+ev_up1lvl+") price: "+ev_up1price+" EP";
+                document.getElementById("ue2").innerHTML = "generating CP has 10% more chance to generate GP (need to buy upgrade 4) (current: "+ev_up2lvl*10+"%) price: "+ev_up2price+" EP";
+                document.getElementById("ue3").innerHTML = "increase upgrade 2 efficiency by .25 per level (current: +"+(ev_up3lvl*0.25).toFixed(2)+") price: "+ev_up3price+" EP";
+                document.getElementById("ue1_b").style.visibility='visible';
+                document.getElementById("ue2_b").style.visibility='visible';
+                document.getElementById("ue3_b").style.visibility='visible';
             }
         }
         function cheat(){
-            clickpoints=10000000000
-            totalclickpoints=10000000000
+            clickpoints+=10**10;
+            totalclickpoints+=10**10;
+            evolvepoints+=10**6;
+            evolved=true;
+            update()
         }
         </script>
     </body>
