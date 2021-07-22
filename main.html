@@ -12,6 +12,8 @@
             #ue1_b{visibility:hidden}
             #ue2_b{visibility:hidden}
             #ue3_b{visibility:hidden}
+            #ue4_b{visibility:hidden}
+            #ue5_b{visibility:hidden}
         </style>
     </head>
     <body>
@@ -43,6 +45,10 @@
         <p id=ue2></p>
         <p id=ue3_b><input type="button" onclick="ev_upgrade3()" value="Evolve Upgrade 3: CP Gain Gain Gain"></input></p>
         <p id=ue3></p>
+        <p id=ue4_b><input type="button" onclick="ev_upgrade4()" value="Evolve Upgrade 4: EP Gain"></input></p>
+        <p id=ue4></p>
+        <p id=ue5_b><input type="button" onclick="ev_upgrade5()" value="Evolve Upgrade 5: automate CP"></input></p>
+        <p id=ue5></p>
         <script>
         var totalclicked=0, clickpoints=0, totalclickpoints=0, cpgain=1;
         var contentunlockpricelist=[20,50,250,1000,15000,100000,10000000], contentunlockpriceindex=0;
@@ -50,7 +56,8 @@
         var generationpoints=0, gpgain=0;
         var evolved=false, evolvepoints=0;
         var maxlvl_upgrade1=15, maxlvl_upgrade2=7, maxlvl_upgrade3=10, maxlvl_upgrade4=5, maxlvl_upgrade5=5;
-        var ev_up1price=5, ev_up1lvl=0, ev_up2price=3, ev_up2lvl=0, ev_up3price=10, ev_up3lvl=0;
+        var ev_up1price=5, ev_up1lvl=0, ev_up2price=3, ev_up2lvl=0, ev_up3price=10, ev_up3lvl=0, ev_up4price=10, ev_up4lvl=0, ev_up5price=1, ev_up5lvl=0;
+        var autogen=false;
         function clickedbutton(){
             clickpoints+=cpgain;
             totalclickpoints+=cpgain;
@@ -120,7 +127,7 @@
             }
         }
         function ev_upgrade2(){
-            if(evolvepoints>=ev_up2price){
+            if(evolvepoints>=ev_up2price && ev_up2lvl<=9){
                 evolvepoints-=ev_up2price;
                 ev_up2lvl+=1;
                 ev_up2price*=5;
@@ -132,6 +139,22 @@
                 evolvepoints-=ev_up3price;
                 ev_up3lvl+=1;
                 ev_up3price*=10;
+                update();
+            }
+        }
+        function ev_upgrade4(){
+            if(evolvepoints>=ev_up4price){
+                evolvepoints-=ev_up4price;
+                ev_up4lvl+=1;
+                ev_up4price*=10;
+                update();
+            }
+        }
+        function ev_upgrade5(){
+            if(evolvepoints>=ev_up5price){
+                evolvepoints-=ev_up5price;
+                ev_up5lvl+=1;
+                ev_up5price*=2;
                 update();
             }
         }
@@ -155,6 +178,20 @@
                 update()
             }
         }
+        function expo(_value){
+            if(_value>=1000000){
+                return _value.toExponential(2)
+            }
+            else{
+                return _value
+            }
+        }
+        (function autoclick(){
+            if(ev_up5lvl>=1){
+                clickedbutton();
+            }
+            timer=setTimeout(autoclick,ev_up5lvl>=1?(10000/ev_up5lvl):100);
+        })();
         function update(){
             cpgain=Math.round(((1+up1lvl*(up2lvl*(ev_up3lvl*0.25+1)+1))+up3lvl*10)*((generationpoints*(1+up5lvl*0.5)+1))*(Math.sqrt(evolvepoints)+1));
             gpgain=up4lvl*0.01;
@@ -173,12 +210,12 @@
                     document.getElementById("r4").innerHTML = "you have unlocked every contents (for now!)";
                 }
             }
-            document.getElementById("r1").innerHTML = "you have "+clickpoints+" Click Points. (+"+cpgain+"/Click)";
+            document.getElementById("r1").innerHTML = "you have "+expo(clickpoints)+" Click Points. (+"+cpgain+"/Click)";
             if(totalclickpoints>=5 || evolved){
-                document.getElementById("r2").innerHTML = "you have "+totalclickpoints+" Total Click Points.";
+                document.getElementById("r2").innerHTML = "you have "+expo(totalclickpoints)+" Total Click Points.";
             }
             if(totalclickpoints>=20 || evolved){
-                document.getElementById("r3").innerHTML = "you have clicked the button total of "+totalclicked+" times.";
+                document.getElementById("r3").innerHTML = "you have clicked the button total of "+expo(totalclicked)+" times.";
             }
             if(totalclickpoints>=50){
                 if(up1lvl<maxlvl_upgrade1){
@@ -263,15 +300,24 @@
                 document.getElementById("g0_b").style.visibility='hidden';
             }
             if(evolved){
-                document.getElementById("r5").innerHTML = "you have "+evolvepoints+" Evolve Points.";
+                document.getElementById("r5").innerHTML = "you have "+expo(evolvepoints)+" Evolve Points.";
                 document.getElementById("r6").innerHTML = "your EP boosts CP gain by "+((Math.sqrt(evolvepoints)).toFixed(2))+".";
                 document.getElementById("ue0").innerHTML = "Evolve Upgrades don't reset on evolve.";
                 document.getElementById("ue1").innerHTML = "increase CP upgrades' max level by 1 each (current: +"+ev_up1lvl+") price: "+ev_up1price+" EP";
-                document.getElementById("ue2").innerHTML = "generating CP has 10% more chance to generate GP (need to buy upgrade 4) (current: "+ev_up2lvl*10+"%) price: "+ev_up2price+" EP";
+                if(ev_up2lvl<=9){
+                    document.getElementById("ue2").innerHTML = "generating CP has 10% more chance to generate GP (need to buy upgrade 4) (current: "+ev_up2lvl*10+"%) price: "+ev_up2price+" EP";
+                }
+                else{
+                    document.getElementById("ue2").innerHTML = "generating CP has 10% more chance to generate GP (need to buy upgrade 4) (current: 100%) (MAX LEVEL)";
+                }
                 document.getElementById("ue3").innerHTML = "increase upgrade 2 efficiency by .25 per level (current: +"+(ev_up3lvl*0.25).toFixed(2)+") price: "+ev_up3price+" EP";
+                document.getElementById("ue4").innerHTML = "increase EP gain base by 1 per level (additive) (current: +"+ev_up4lvl+") price: "+ev_up4price+" EP";
+                document.getElementById("ue5").innerHTML = "allowes you to auto click (once per 10s per level) (current: "+ev_up5lvl+"/10s) price: "+ev_up5price+" EP";
                 document.getElementById("ue1_b").style.visibility='visible';
                 document.getElementById("ue2_b").style.visibility='visible';
                 document.getElementById("ue3_b").style.visibility='visible';
+                document.getElementById("ue4_b").style.visibility='visible';
+                document.getElementById("ue5_b").style.visibility='visible';
             }
         }
         function cheat(){
