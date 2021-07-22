@@ -65,3 +65,13 @@ Pre-Alpha 2.13
 Pre-Alpha 2.14
 * bugfixes
 * cheat() now does update as well
+Pre-Alpha 2.15
+* now evolve upgrade 2 has max level
+Pre-Alpha 2.16
+* spots for 2 new evolve upgrades
+* now the game supports exponent (for 1M+)
+Pre-Alpha 2.17
+* 2 new evolve upgrades
+* added "AUTOMATION"
+Pre-Alpha 2.18
+* bugfixes
