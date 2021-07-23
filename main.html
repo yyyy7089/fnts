@@ -20,9 +20,12 @@
             #b4_b{visibility:hidden}
             #b5_b{visibility:hidden}
             #b6_b{visibility:hidden}
+            #sl{visibility:hidden}
         </style>
     </head>
     <body>
+        <p id=sl><input type="save" onclick="save_stuffs()" value="SAVE"></input></p>
+        <p id=sl><input type="load" onclick="load_stuffs()" value="LOAD"></input></p>
         <input type="button" onclick="clickedbutton()" value="Click"/></input>
         <p id=r1>you have 0 Click Points.</p>
         <p id=r2></p>
@@ -68,14 +71,15 @@
         <p id=b4_b><input type="button" onclick="brickmerge(3)" value="Merge 10 Houses to 1 City"></input></p>
         <p id=b5_b><input type="button" onclick="brickmerge(4)" value="Merge 10 Cities to 1 Country"></input></p>
         <script>
+        var save_list=[], load_list=[];
         var totalclicked=0, clickpoints=0, totalclickpoints=0, cpgain=1;
-        var contentunlockpricelist=[20,50,250,1000,15000,100000,10**7,10**10], contentunlockpriceindex=0;
+        var contentunlockpricelist=[20,50,250,1000,5000,15000,100000,10**7,10**10], contentunlockpriceindex=0;
         var up1lvl=0, up1price=50, up2lvl=0, up2price=200, up3lvl=0, up3price=450, up4lvl=0, up4price=5000, up5lvl=0, up5price=10000;
         var generationpoints=0, gpgain=0;
-        var evolved=false, evolvepoints=0;
+        var evolved=0, evolvepoints=0;
         var maxlvl_upgrade1=15, maxlvl_upgrade2=7, maxlvl_upgrade3=10, maxlvl_upgrade4=5, maxlvl_upgrade5=5;
         var ev_up1price=5, ev_up1lvl=0, ev_up2price=3, ev_up2lvl=0, ev_up3price=10, ev_up3lvl=0, ev_up4price=10, ev_up4lvl=0, ev_up5price=1, ev_up5lvl=0;
-        var cangeneratebrick=false, bricklist=[0,0,0,0,0,0], maxbricktier=0;
+        var cangeneratebrick=0, bricklist=[0,0,0,0,0,0], maxbricktier=0;
         function clickedbutton(){
             clickpoints+=cpgain;
             totalclickpoints+=cpgain;
@@ -192,7 +196,7 @@
                 evolvepoints+=Math.round(Math.log(clickpoints)/Math.LN10);
                 clickpoints=bricklist[2]*1000;
                 totalclickpoints=bricklist[2]*1000;
-                evolved=true;
+                evolved=1;
                 update()
             }
         }
@@ -213,6 +217,50 @@
             else{
                 return _value
             }
+        }
+        function save_stuffs(){
+            save_list=[totalclicked,clickpoints,totalclickpoints,up1lvl,up2lvl,up3lvl,up4lvl,up5lvl,up1price,up2price,up3price,up4price,up5price,generationpoints*100,evolved,evolvepoints,ev_up1lvl,ev_up2lvl,ev_up3lvl,ev_up4lvl,ev_up5lvl,ev_up1price,ev_up2price,ev_up3price,ev_up4price,ev_up5price,cangeneratebrick,bricklist,maxbricktier];
+            localStorage.setItem('save_fnts',save_list)
+        }
+        function load_stuffs(){
+            load_list=localStorage.getItem('save_fnts').split(',').map(function(item){
+                return parseInt(item,10);
+            })
+            totalclicked=load_list[0]
+            clickpoints=load_list[1]
+            totalclickpoints=load_list[2]
+            up1lvl=load_list[3]
+            up2lvl=load_list[4]
+            up3lvl=load_list[5]
+            up4lvl=load_list[6]
+            up5lvl=load_list[7]
+            up1price=load_list[8]
+            up2price=load_list[9]
+            up3price=load_list[10]
+            up4price=load_list[11]
+            up5price=load_list[12]
+            generationpoints=load_list[13]/100
+            evolved=load_list[14]
+            evolvepoints=load_list[15]
+            ev_up1lvl=load_list[16]
+            ev_up2lvl=load_list[17]
+            ev_up3lvl=load_list[18]
+            ev_up4lvl=load_list[19]
+            ev_up5lvl=load_list[20]
+            ev_up1price=load_list[21]
+            ev_up2price=load_list[22]
+            ev_up3price=load_list[23]
+            ev_up4price=load_list[24]
+            ev_up5price=load_list[25]
+            cangeneratebrick=load_list[26]
+            bricklist[0]=load_list[27]
+            bricklist[1]=load_list[28]
+            bricklist[2]=load_list[29]
+            bricklist[3]=load_list[30]
+            bricklist[4]=load_list[31]
+            bricklist[5]=load_list[32]
+            maxbricktier=load_list[33]
+            update()
         }
         (function autoclick(){
             if(ev_up5lvl>=1){
@@ -241,7 +289,12 @@
             if(totalclickpoints>=contentunlockpricelist[contentunlockpriceindex]){
                 contentunlockpriceindex+=1;
                 if(contentunlockpriceindex<contentunlockpricelist.length){
-                    document.getElementById("r4").innerHTML = "next content unlocked at "+expo(contentunlockpricelist[contentunlockpriceindex])+" total click points.";
+                    if(evolved){
+                        document.getElementById("r4").innerHTML = "next content unlocked at "+expo(contentunlockpricelist[contentunlockpriceindex])+" total click points. (since you evolved, some stuffs are already unlocked)";
+                    }
+                    else{
+                        document.getElementById("r4").innerHTML = "next content unlocked at "+expo(contentunlockpricelist[contentunlockpriceindex])+" total click points.";
+                    }
                     update()
                 }
                 else{
@@ -358,7 +411,7 @@
                 document.getElementById("ue5_b").style.visibility='visible';
             }
             if(cangeneratebrick || totalclickpoints>=10**10){
-                cangeneratebrick=true;
+                cangeneratebrick=1;
                 document.getElementById("b0").innerHTML = "you gain "+(bricklist[5]+1)+" brick every "+(100/(100+Math.sqrt(bricklist[4])**1.3*10)).toFixed(2)+" second(s). each brick 'building' gives you different effect.";
                 document.getElementById("b1").innerHTML = "you have "+bricklist[0]+" bricks. it makes you generate "+bricklist[0]+"% more CP.";
                 document.getElementById("b1_b").style.visibility='visible';
@@ -382,13 +435,16 @@
                 document.getElementById("b6").innerHTML = "you have "+bricklist[5]+" countries. it makes you generate "+bricklist[5]+" more bricks per brick gain";
                 }
             }
+            if(clickpoints>=5000 || evolved){
+                document.getElementById("sl").style.visibility='visible';
+            }
         }
         function cheat(){
             clickpoints+=10**10;
             totalclickpoints+=10**10;
             evolvepoints+=10**6;
+            evolved=1;
             bricklist[0]+=10**5;
-            evolved=true;
             update()
         }
         </script>
