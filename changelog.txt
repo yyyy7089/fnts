@@ -92,3 +92,6 @@ Pre-Alpha 2.25
 * bugfixes
 Pre-Alpha 2.26
 * there is 1 new brick buildings
+Pre-Alpha 2.27
+* SAVE SYSTEM
+* bugfixes
