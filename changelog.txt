@@ -96,4 +96,10 @@ Pre-Alpha 2.27
 * SAVE SYSTEM
 * bugfixes
 Pre-Alpha 2.28
-* major bug with SAVE SYSTEM fixed
+* bugfixes
+Pre-Alpha 2.29
+* bugfixes
+Pre-Alpha 2.30
+* bugfixes
+Pre-Alpha 2.31
+* bugfixes
