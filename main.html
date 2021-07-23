@@ -74,7 +74,7 @@
         <script>
         var save_list=[], load_list=[];
         var totalclicked=0, clickpoints=0, totalclickpoints=0, cpgain=1;
-        var contentunlockpricelist=[20,50,250,1000,5000,15000,100000,10**7,10**10], contentunlockpriceindex=0;
+        var contentunlockpricelist=[20,50,250,1000,15000,100000,10**7,10**10], contentunlockpriceindex=0;
         var up1lvl=0, up1price=50, up2lvl=0, up2price=200, up3lvl=0, up3price=450, up4lvl=0, up4price=5000, up5lvl=0, up5price=10000;
         var generationpoints=0, gpgain=0;
         var evolved=0, evolvepoints=0;
@@ -436,7 +436,7 @@
                 document.getElementById("b6").innerHTML = "you have "+bricklist[5]+" countries. it makes you generate "+bricklist[5]+" more bricks per brick gain";
                 }
             }
-            if(clickpoints>=5000 || evolved){
+            if(clickpoints>=50 || evolved){
                 document.getElementById("sv").style.visibility='visible';
                 document.getElementById("ld").style.visibility='visible';
             }
