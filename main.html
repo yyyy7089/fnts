@@ -21,12 +21,13 @@
             #b5_b{visibility:hidden}
             #b6_b{visibility:hidden}
             #sv{visibility:hidden}
-            #ld{visibility:hidden}
+            #a_sv{visibility:hidden}
         </style>
     </head>
     <body>
         <p id=sv><input type="button" onclick="save_stuffs()" value="SAVE"></input></p>
-        <p id=ld><input type="button" onclick="load_stuffs()" value="LOAD"></input></p>
+        <p id=a_sv><input type="button" onclick="autosave=!autosave?1:0;update();" value="AUTOSAVE"></input></p>
+        <p id=a_sv_v></p>
         <input type="button" onclick="clickedbutton()" value="Click"/></input>
         <p id=r1>you have 0 Click Points.</p>
         <p id=r2></p>
@@ -72,15 +73,16 @@
         <p id=b4_b><input type="button" onclick="brickmerge(3)" value="Merge 10 Houses to 1 City"></input></p>
         <p id=b5_b><input type="button" onclick="brickmerge(4)" value="Merge 10 Cities to 1 Country"></input></p>
         <script>
-        var save_list=[], load_list=[];
+        var save_list=[], load_list=[], autosave=0;
         var totalclicked=0, clickpoints=0, totalclickpoints=0, cpgain=1;
-        var contentunlockpricelist=[20,50,250,1000,15000,100000,10**7,10**10], contentunlockpriceindex=0;
+        var contentunlockpricelist=[20,50,250,1000,5000,15000,100000,10**7,10**10], contentunlockpriceindex=0;
         var up1lvl=0, up1price=50, up2lvl=0, up2price=200, up3lvl=0, up3price=450, up4lvl=0, up4price=5000, up5lvl=0, up5price=10000;
         var generationpoints=0, gpgain=0;
         var evolved=0, evolvepoints=0;
         var maxlvl_upgrade1=15, maxlvl_upgrade2=7, maxlvl_upgrade3=10, maxlvl_upgrade4=5, maxlvl_upgrade5=5;
         var ev_up1price=5, ev_up1lvl=0, ev_up2price=3, ev_up2lvl=0, ev_up3price=10, ev_up3lvl=0, ev_up4price=10, ev_up4lvl=0, ev_up5price=1, ev_up5lvl=0;
         var cangeneratebrick=0, bricklist=[0,0,0,0,0,0], maxbricktier=0;
+        load_stuffs();
         function clickedbutton(){
             clickpoints+=cpgain;
             totalclickpoints+=cpgain;
@@ -220,11 +222,11 @@
             }
         }
         function save_stuffs(){
-            save_list=[totalclicked,clickpoints,totalclickpoints,up1lvl,up2lvl,up3lvl,up4lvl,up5lvl,up1price,up2price,up3price,up4price,up5price,generationpoints*100,evolved,evolvepoints,ev_up1lvl,ev_up2lvl,ev_up3lvl,ev_up4lvl,ev_up5lvl,ev_up1price,ev_up2price,ev_up3price,ev_up4price,ev_up5price,cangeneratebrick,bricklist,maxbricktier];
-            localStorage.setItem('save_fnts',save_list)
+            save_list=[totalclicked,clickpoints,totalclickpoints,up1lvl,up2lvl,up3lvl,up4lvl,up5lvl,up1price,up2price,up3price,up4price,up5price,generationpoints*100,evolved,evolvepoints,ev_up1lvl,ev_up2lvl,ev_up3lvl,ev_up4lvl,ev_up5lvl,ev_up1price,ev_up2price,ev_up3price,ev_up4price,ev_up5price,cangeneratebrick,bricklist,maxbricktier,autosave];
+            localStorage.setItem('save_fnts',btoa(save_list))
         }
         function load_stuffs(){
-            load_list=localStorage.getItem('save_fnts').split(',').map(function(item){
+            load_list=atob(localStorage.getItem('save_fnts')).split(',').map(function(item){
                 return parseInt(item,10);
             })
             totalclicked=load_list[0]
@@ -261,6 +263,7 @@
             bricklist[4]=load_list[31]
             bricklist[5]=load_list[32]
             maxbricktier=load_list[33]
+            autosave=load_list[34]
             update()
         }
         (function autoclick(){
@@ -274,6 +277,12 @@
                 generatebrick();
             }
             timer2=setTimeout(autobrick,100000/(100+Math.sqrt(bricklist[4])**1.3*10));
+        })();
+        (function autosave_f(){
+            if(autosave){
+                save_stuffs();
+            }
+            timer3=setTimeout(autosave_f,10000)
         })();
         function generatebrick(){
             bricklist[0]+=(1+bricklist[5]);
@@ -438,7 +447,10 @@
             }
             if(clickpoints>=50 || evolved){
                 document.getElementById("sv").style.visibility='visible';
-                document.getElementById("ld").style.visibility='visible';
+            }
+            if(clickpoints>=5000 || evolved){
+                document.getElementById("a_sv").style.visibility='visible';
+                document.getElementById("a_sv_v").innerHTML = 'autosave: '+(autosave?'on':'off');
             }
         }
         function cheat(){
