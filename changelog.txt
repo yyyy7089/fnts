@@ -103,3 +103,9 @@ Pre-Alpha 2.30
 * bugfixes
 Pre-Alpha 2.31
 * bugfixes
+Pre-Alpha 2.32
+* now the SAVE is encrypted
+Pre-Alpha 2.33
+* auto-load
+Pre-Alpha 2.34
+* auto-save (needs to unlock the strat for it) (every 10 secs)
