@@ -14,14 +14,43 @@
             #ue3_b{visibility:hidden}
             #ue4_b{visibility:hidden}
             #ue5_b{visibility:hidden}
-            #b1_b{visibility:hidden}
-            #b2_b{visibility:hidden}
-            #b3_b{visibility:hidden}
-            #b4_b{visibility:hidden}
-            #b5_b{visibility:hidden}
-            #b6_b{visibility:hidden}
+            #b1_b{
+                visibility:hidden;
+                display:inline;
+            }
+            #b2_b{
+                visibility:hidden;
+                display:inline;
+            }
+            #b3_b{
+                visibility:hidden;
+                display:inline;
+            }
+            #b4_b{
+                visibility:hidden;
+                display:inline;
+            }
+            #b5_b{
+                visibility:hidden;
+                display:inline;
+            }
             #sv{visibility:hidden}
             #a_sv{visibility:hidden}
+            .ach{
+                visibility:hidden;
+                height:30px;
+                width:30px;
+                background-color:rgb(180,60,60);
+                color:white;
+                display:inline;
+            }
+            #ach_ls{
+                visibility:hidden;
+                height:30px;
+                width:175px;
+                background-color:rgb(60, 180, 60);
+                color:black;
+            }
         </style>
     </head>
     <body>
@@ -72,6 +101,69 @@
         <p id=b3_b><input type="button" onclick="brickmerge(2)" value="Merge 10 Walls to 1 House"></input></p>
         <p id=b4_b><input type="button" onclick="brickmerge(3)" value="Merge 10 Houses to 1 City"></input></p>
         <p id=b5_b><input type="button" onclick="brickmerge(4)" value="Merge 10 Cities to 1 Country"></input></p>
+        <p></p>
+        <input id="ach_ls" type="button" value="Achievements"></input>
+        <p></p>
+        <input class="ach" id="ach_11" type="button" onclick="ach_f(11)" value="11"></input>
+        <input class="ach" id="ach_21" type="button" onclick="ach_f(21)" value="21"></input>
+        <input class="ach" id="ach_31" type="button" onclick="ach_f(31)" value="31"></input>
+        <input class="ach" id="ach_41" type="button" onclick="ach_f(41)" value="41"></input>
+        <input class="ach" id="ach_51" type="button" onclick="ach_f(51)" value="51"></input>
+        <p></p>
+        <input class="ach" id="ach_12" type="button" onclick="ach_f(12)" value="12"></input>
+        <input class="ach" id="ach_22" type="button" onclick="ach_f(22)" value="22"></input>
+        <input class="ach" id="ach_32" type="button" onclick="ach_f(32)" value="32"></input>
+        <input class="ach" id="ach_42" type="button" onclick="ach_f(42)" value="42"></input>
+        <input class="ach" id="ach_52" type="button" onclick="ach_f(52)" value="52"></input>
+        <p></p>
+        <input class="ach" id="ach_13" type="button" onclick="ach_f(13)" value="13"></input>
+        <input class="ach" id="ach_23" type="button" onclick="ach_f(23)" value="23"></input>
+        <input class="ach" id="ach_33" type="button" onclick="ach_f(33)" value="33"></input>
+        <input class="ach" id="ach_43" type="button" onclick="ach_f(43)" value="43"></input>
+        <input class="ach" id="ach_53" type="button" onclick="ach_f(53)" value="53"></input>
+        <p></p>
+        <input class="ach" id="ach_14" type="button" onclick="ach_f(14)" value="14"></input>
+        <input class="ach" id="ach_24" type="button" onclick="ach_f(24)" value="24"></input>
+        <input class="ach" id="ach_34" type="button" onclick="ach_f(34)" value="34"></input>
+        <input class="ach" id="ach_44" type="button" onclick="ach_f(44)" value="44"></input>
+        <input class="ach" id="ach_54" type="button" onclick="ach_f(54)" value="54"></input>
+        <p></p>
+        <input class="ach" id="ach_15" type="button" onclick="ach_f(15)" value="15"></input>
+        <input class="ach" id="ach_25" type="button" onclick="ach_f(25)" value="25"></input>
+        <input class="ach" id="ach_35" type="button" onclick="ach_f(35)" value="35"></input>
+        <input class="ach" id="ach_45" type="button" onclick="ach_f(45)" value="45"></input>
+        <input class="ach" id="ach_55" type="button" onclick="ach_f(55)" value="55"></input>
+        <p></p>
+        <input class="ach" id="ach_16" type="button" onclick="ach_f(16)" value="16"></input>
+        <input class="ach" id="ach_26" type="button" onclick="ach_f(26)" value="26"></input>
+        <input class="ach" id="ach_36" type="button" onclick="ach_f(36)" value="36"></input>
+        <input class="ach" id="ach_46" type="button" onclick="ach_f(46)" value="46"></input>
+        <input class="ach" id="ach_56" type="button" onclick="ach_f(56)" value="56"></input>
+        <p></p>
+        <input class="ach" id="ach_17" type="button" onclick="ach_f(17)" value="17"></input>
+        <input class="ach" id="ach_27" type="button" onclick="ach_f(27)" value="27"></input>
+        <input class="ach" id="ach_37" type="button" onclick="ach_f(37)" value="37"></input>
+        <input class="ach" id="ach_47" type="button" onclick="ach_f(47)" value="47"></input>
+        <input class="ach" id="ach_57" type="button" onclick="ach_f(57)" value="57"></input>
+        <p></p>
+        <input class="ach" id="ach_18" type="button" onclick="ach_f(18)" value="18"></input>
+        <input class="ach" id="ach_28" type="button" onclick="ach_f(28)" value="28"></input>
+        <input class="ach" id="ach_38" type="button" onclick="ach_f(38)" value="38"></input>
+        <input class="ach" id="ach_48" type="button" onclick="ach_f(48)" value="48"></input>
+        <input class="ach" id="ach_58" type="button" onclick="ach_f(58)" value="58"></input>
+        <p></p>
+        <input class="ach" id="ach_19" type="button" onclick="ach_f(19)" value="19"></input>
+        <input class="ach" id="ach_29" type="button" onclick="ach_f(29)" value="29"></input>
+        <input class="ach" id="ach_39" type="button" onclick="ach_f(39)" value="39"></input>
+        <input class="ach" id="ach_49" type="button" onclick="ach_f(49)" value="49"></input>
+        <input class="ach" id="ach_59" type="button" onclick="ach_f(59)" value="59"></input>
+        <p></p>
+        <input class="ach" id="ach_10" type="button" onclick="ach_f(10)" value="10"></input>
+        <input class="ach" id="ach_20" type="button" onclick="ach_f(20)" value="20"></input>
+        <input class="ach" id="ach_30" type="button" onclick="ach_f(30)" value="30"></input>
+        <input class="ach" id="ach_40" type="button" onclick="ach_f(40)" value="40"></input>
+        <input class="ach" id="ach_50" type="button" onclick="ach_f(50)" value="50"></input>
+        <p id=ach_help></p>
         <script>
         var save_list=[], load_list=[], autosave=0;
         var totalclicked=0, clickpoints=0, totalclickpoints=0, cpgain=1;
@@ -82,6 +174,7 @@
         var maxlvl_upgrade1=15, maxlvl_upgrade2=7, maxlvl_upgrade3=10, maxlvl_upgrade4=5, maxlvl_upgrade5=5;
         var ev_up1price=5, ev_up1lvl=0, ev_up2price=3, ev_up2lvl=0, ev_up3price=10, ev_up3lvl=0, ev_up4price=10, ev_up4lvl=0, ev_up5price=1, ev_up5lvl=0;
         var cangeneratebrick=0, bricklist=[0,0,0,0,0,0], maxbricktier=0;
+        var ach_l=[], ach_d_l=new Array(200).fill(0);
         load_stuffs();
         function clickedbutton(){
             clickpoints+=cpgain;
@@ -226,45 +319,43 @@
             localStorage.setItem('save_fnts',btoa(save_list))
         }
         function load_stuffs(){
-            load_list=atob(localStorage.getItem('save_fnts')).split(',').map(function(item){
+            load_list=localStorage.getItem('save_fnts');
+            if(load_list){
+            load_list=atob(load_list).split(',').map(function(item){
                 return parseInt(item,10);
             })
-            totalclicked=load_list[0]
-            clickpoints=load_list[1]
-            totalclickpoints=load_list[2]
-            up1lvl=load_list[3]
-            up2lvl=load_list[4]
-            up3lvl=load_list[5]
-            up4lvl=load_list[6]
-            up5lvl=load_list[7]
-            up1price=load_list[8]
-            up2price=load_list[9]
-            up3price=load_list[10]
-            up4price=load_list[11]
-            up5price=load_list[12]
-            generationpoints=load_list[13]/100
-            evolved=load_list[14]
-            evolvepoints=load_list[15]
-            ev_up1lvl=load_list[16]
-            ev_up2lvl=load_list[17]
-            ev_up3lvl=load_list[18]
-            ev_up4lvl=load_list[19]
-            ev_up5lvl=load_list[20]
-            ev_up1price=load_list[21]
-            ev_up2price=load_list[22]
-            ev_up3price=load_list[23]
-            ev_up4price=load_list[24]
-            ev_up5price=load_list[25]
-            cangeneratebrick=load_list[26]
-            bricklist[0]=load_list[27]
-            bricklist[1]=load_list[28]
-            bricklist[2]=load_list[29]
-            bricklist[3]=load_list[30]
-            bricklist[4]=load_list[31]
-            bricklist[5]=load_list[32]
-            maxbricktier=load_list[33]
-            autosave=load_list[34]
-            update()
+                totalclicked=load_list[0]
+                clickpoints=load_list[1]
+                totalclickpoints=load_list[2]
+                up1lvl=load_list[3]
+                up2lvl=load_list[4]
+                up3lvl=load_list[5]
+                up4lvl=load_list[6]
+                up5lvl=load_list[7]
+                up1price=load_list[8]
+                up2price=load_list[9]
+                up3price=load_list[10]
+                up4price=load_list[11]
+                up5price=load_list[12]
+                generationpoints=load_list[13]/100
+                evolved=load_list[14]
+                evolvepoints=load_list[15]
+                ev_up1lvl=load_list[16]
+                ev_up2lvl=load_list[17]
+                ev_up3lvl=load_list[18]
+                ev_up4lvl=load_list[19]
+                ev_up5lvl=load_list[20]
+                ev_up1price=load_list[21]
+                ev_up2price=load_list[22]
+                ev_up3price=load_list[23]
+                ev_up4price=load_list[24]
+                ev_up5price=load_list[25]
+                cangeneratebrick=load_list[26]
+                bricklist=load_list.slice(27,33)
+                maxbricktier=load_list[33]
+                autosave=load_list[34]
+                update()
+            }
         }
         (function autoclick(){
             if(ev_up5lvl>=1){
@@ -287,6 +378,18 @@
         function generatebrick(){
             bricklist[0]+=(1+bricklist[5]);
             update();
+        }
+        function ach_f(_x){
+            if(_x==11){document.getElementById("ach_help").innerHTML = ach_d_l[11]==0?"reach 5 total CP. reward: shows you your total CP.":"reach 5 total CP. completed! reward: shows you your total CP.";}
+            else if(_x==12){document.getElementById("ach_help").innerHTML = ach_d_l[12]==0?"reach 20 total CP. reward: shows you how much have you clicked.":"reach 20 total CP. completed! reward: shows you how much have you clicked.";}
+            else if(_x==13){document.getElementById("ach_help").innerHTML = ach_d_l[13]==0?"reach 50 total CP. reward: allowes you to save.":"reach 50 total CP. completed! reward: allowes you to save.";}
+            else if(_x==14){document.getElementById("ach_help").innerHTML = ach_d_l[14]==0?"reach 250 total CP. reward: shows you achievements.":"reach 250 total CP. completed! reward: shows you achievements.";}
+            else if(_x==16){document.getElementById("ach_help").innerHTML = ach_d_l[15]==0?"reach 5000 total CP. reward: allows you to auto-save.":"reach 5000 total CP. completed! reward: allowes you to auto-save.";}
+            else if(_x==16){document.getElementById("ach_help").innerHTML = ach_d_l[16]==0?"reach 1e+7 total CP. reward: there is new reset tier: EVOLVE.":"reach 1e+7 total CP. completed! reward: there is new reset tier: EVOLVE.";}
+            else if(_x==17){document.getElementById("ach_help").innerHTML = ach_d_l[17]==0?"reach 1e+10 total CP. reward: unlock bricks.":"reach 1e+10 total CP. completed! reward: unlock bricks.";}
+            else{
+                document.getElementById("ach_help").innerHTML = "it's work in progress"
+            }
         }
         function update(){
             cpgain=Math.round(((1+up1lvl*(up2lvl*(ev_up3lvl*0.25+1)+bricklist[3]+1))+up3lvl*10)*((generationpoints*(1+up5lvl*0.5)+1))*(Math.sqrt(evolvepoints)+1)*(bricklist[0]*0.01+1));
@@ -311,7 +414,7 @@
                     document.getElementById("r4").innerHTML = "you have unlocked every contents (for now!)";
                 }
             }
-            document.getElementById("r1").innerHTML = "you have "+expo(clickpoints)+" Click Points. (+"+cpgain+"/Click)";
+            document.getElementById("r1").innerHTML = "you have "+expo(clickpoints)+" Click Points. (+"+expo(cpgain)+"/Click)";
             if(totalclickpoints>=5 || evolved){
                 document.getElementById("r2").innerHTML = "you have "+expo(totalclickpoints)+" Total Click Points.";
             }
@@ -390,7 +493,7 @@
             }
             else if(evolved){
                 document.getElementById("evo").style.visibility='visible';
-                document.getElementById("evo_t").innerHTML = "you need at least 10000000 CP to evolve.";
+                document.getElementById("evo_t").innerHTML = "you need at least 1e+7 CP to evolve.";
             }
             if(up4lvl!=0){
                 document.getElementById("g0").innerHTML = "you have "+generationpoints.toFixed(2)+" Generation Points.";
@@ -451,6 +554,49 @@
             if(clickpoints>=5000 || evolved){
                 document.getElementById("a_sv").style.visibility='visible';
                 document.getElementById("a_sv_v").innerHTML = 'autosave: '+(autosave?'on':'off');
+            }
+            if(clickpoints>=250 || evolved){
+                document.getElementById("ach_ls").style.visibility='visible';
+                ach_l=document.getElementsByClassName("ach");
+                for(i=0;i<ach_l.length;++i){
+                    ach_l[i].style.visibility='visible';
+                }
+            }
+            //achievement count
+            if(clickpoints>=5){
+                ach_d_l[11]=1;
+                document.getElementById("ach_11").style.background="#3cb43c";
+                document.getElementById("ach_11").style.color="black";
+            }
+            if(clickpoints>=20){
+                ach_d_l[12]=1;
+                document.getElementById("ach_12").style.background="#3cb43c";
+                document.getElementById("ach_12").style.color="black";
+            }
+            if(clickpoints>=50){
+                ach_d_l[13]=1;
+                document.getElementById("ach_13").style.background="#3cb43c";
+                document.getElementById("ach_13").style.color="black";
+            }
+            if(clickpoints>=250){
+                ach_d_l[14]=1;
+                document.getElementById("ach_14").style.background="#3cb43c";
+                document.getElementById("ach_14").style.color="black";
+            }
+            if(clickpoints>=5000){
+                ach_d_l[15]=1;
+                document.getElementById("ach_15").style.background="#3cb43c";
+                document.getElementById("ach_15").style.color="black";
+            }
+            if(clickpoints>=10**7){
+                ach_d_l[16]=1;
+                document.getElementById("ach_16").style.background="#3cb43c";
+                document.getElementById("ach_16").style.color="black";
+            }
+            if(clickpoints>=10**10){
+                ach_d_l[17]=1;
+                document.getElementById("ach_17").style.background="#3cb43c";
+                document.getElementById("ach_17").style.color="black";
             }
         }
         function cheat(){
