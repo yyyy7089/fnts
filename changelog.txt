@@ -1,612 +1,129 @@
-<html>
-    <head>
-        <title>From Nothing to Something</title>
-        <style>
-            #g0_b{visibility:hidden}
-            #u1_b{visibility:hidden}
-            #u2_b{visibility:hidden}
-            #u3_b{visibility:hidden}
-            #u4_b{visibility:hidden}
-            #u5_b{visibility:hidden}
-            #evo{visibility:hidden}
-            #ue1_b{visibility:hidden}
-            #ue2_b{visibility:hidden}
-            #ue3_b{visibility:hidden}
-            #ue4_b{visibility:hidden}
-            #ue5_b{visibility:hidden}
-            #b1_b{
-                visibility:hidden;
-                display:inline;
-            }
-            #b2_b{
-                visibility:hidden;
-                display:inline;
-            }
-            #b3_b{
-                visibility:hidden;
-                display:inline;
-            }
-            #b4_b{
-                visibility:hidden;
-                display:inline;
-            }
-            #b5_b{
-                visibility:hidden;
-                display:inline;
-            }
-            #sv{visibility:hidden}
-            #a_sv{visibility:hidden}
-            .ach{
-                visibility:hidden;
-                height:30px;
-                width:30px;
-                background-color:rgb(180,60,60);
-                color:white;
-                display:inline;
-            }
-            #ach_ls{
-                visibility:hidden;
-                height:30px;
-                width:175px;
-                background-color:rgb(60, 180, 60);
-                color:black;
-            }
-        </style>
-    </head>
-    <body>
-        <p id=sv><input type="button" onclick="save_stuffs()" value="SAVE"></input></p>
-        <p id=a_sv><input type="button" onclick="autosave=!autosave?1:0;update();" value="AUTOSAVE"></input></p>
-        <p id=a_sv_v></p>
-        <input type="button" onclick="clickedbutton()" value="Click"/></input>
-        <p id=r1>you have 0 Click Points.</p>
-        <p id=r2></p>
-        <p id=r3></p>
-        <p id=r4></p>
-        <p id=r5></p>
-        <p id=r6></p>
-        <p id=evo><input type="button" onclick="evolve()" value="EVOLVE"></input></p>
-        <p id=evo_t></p>
-        <p id=g0_b><input type="button" onclick="generateGP()" value="generate GP"></input></p>
-        <p id=g0></p>
-        <p id=u1_b><input type="button" onclick="upgrade1()" value="Upgrade 1: CP Gain"></input></p>
-        <p id=u1></p>
-        <p id=u2_b><input type="button" onclick="upgrade2()" value="Upgrade 2: CP Gain Gain"></input></p>
-        <p id=u2></p>
-        <p id=u3_b><input type="button" onclick="upgrade3()" value="Upgrade 3: Better CP Gain"></input></p>
-        <p id=u3></p>
-        <p id=u4_b><input type="button" onclick="upgrade4()" value="Upgrade 4: Generation"></input></p>
-        <p id=u4></p>
-        <p id=u5_b><input type="button" onclick="upgrade5()" value="Upgrade 5: GP Efficiency"></input></p>
-        <p id=u5></p>
-        <p id=ue0></p>
-        <p id=ue1_b><input type="button" onclick="ev_upgrade1()" value="Evolve Upgrade 1: Max CP Upgrade Level"></input></p>
-        <p id=ue1></p>
-        <p id=ue2_b><input type="button" onclick="ev_upgrade2()" value="Evolve Upgrade 2: CP+=GP"></input></p>
-        <p id=ue2></p>
-        <p id=ue3_b><input type="button" onclick="ev_upgrade3()" value="Evolve Upgrade 3: CP Gain Gain Gain"></input></p>
-        <p id=ue3></p>
-        <p id=ue4_b><input type="button" onclick="ev_upgrade4()" value="Evolve Upgrade 4: EP Gain"></input></p>
-        <p id=ue4></p>
-        <p id=ue5_b><input type="button" onclick="ev_upgrade5()" value="Evolve Upgrade 5: automate CP"></input></p>
-        <p id=ue5></p>
-        <p id=b0></p>
-        <p id=b1></p>
-        <p id=b2></p>
-        <p id=b3></p>
-        <p id=b4></p>
-        <p id=b5></p>
-        <p id=b6></p>
-        <p id=b1_b><input type="button" onclick="brickmerge(0)" value="Merge 10 Bricks to 1 Heap"></input></p>
-        <p id=b2_b><input type="button" onclick="brickmerge(1)" value="Merge 10 Heaps to 1 Wall"></input></p>
-        <p id=b3_b><input type="button" onclick="brickmerge(2)" value="Merge 10 Walls to 1 House"></input></p>
-        <p id=b4_b><input type="button" onclick="brickmerge(3)" value="Merge 10 Houses to 1 City"></input></p>
-        <p id=b5_b><input type="button" onclick="brickmerge(4)" value="Merge 10 Cities to 1 Country"></input></p>
-        <p></p>
-        <input id="ach_ls" type="button" value="Achievements"></input>
-        <p></p>
-        <input class="ach" id="ach_11" type="button" onclick="ach_f(11)" value="11"></input>
-        <input class="ach" id="ach_21" type="button" onclick="ach_f(21)" value="21"></input>
-        <input class="ach" id="ach_31" type="button" onclick="ach_f(31)" value="31"></input>
-        <input class="ach" id="ach_41" type="button" onclick="ach_f(41)" value="41"></input>
-        <input class="ach" id="ach_51" type="button" onclick="ach_f(51)" value="51"></input>
-        <p></p>
-        <input class="ach" id="ach_12" type="button" onclick="ach_f(12)" value="12"></input>
-        <input class="ach" id="ach_22" type="button" onclick="ach_f(22)" value="22"></input>
-        <input class="ach" id="ach_32" type="button" onclick="ach_f(32)" value="32"></input>
-        <input class="ach" id="ach_42" type="button" onclick="ach_f(42)" value="42"></input>
-        <input class="ach" id="ach_52" type="button" onclick="ach_f(52)" value="52"></input>
-        <p></p>
-        <input class="ach" id="ach_13" type="button" onclick="ach_f(13)" value="13"></input>
-        <input class="ach" id="ach_23" type="button" onclick="ach_f(23)" value="23"></input>
-        <input class="ach" id="ach_33" type="button" onclick="ach_f(33)" value="33"></input>
-        <input class="ach" id="ach_43" type="button" onclick="ach_f(43)" value="43"></input>
-        <input class="ach" id="ach_53" type="button" onclick="ach_f(53)" value="53"></input>
-        <p></p>
-        <input class="ach" id="ach_14" type="button" onclick="ach_f(14)" value="14"></input>
-        <input class="ach" id="ach_24" type="button" onclick="ach_f(24)" value="24"></input>
-        <input class="ach" id="ach_34" type="button" onclick="ach_f(34)" value="34"></input>
-        <input class="ach" id="ach_44" type="button" onclick="ach_f(44)" value="44"></input>
-        <input class="ach" id="ach_54" type="button" onclick="ach_f(54)" value="54"></input>
-        <p></p>
-        <input class="ach" id="ach_15" type="button" onclick="ach_f(15)" value="15"></input>
-        <input class="ach" id="ach_25" type="button" onclick="ach_f(25)" value="25"></input>
-        <input class="ach" id="ach_35" type="button" onclick="ach_f(35)" value="35"></input>
-        <input class="ach" id="ach_45" type="button" onclick="ach_f(45)" value="45"></input>
-        <input class="ach" id="ach_55" type="button" onclick="ach_f(55)" value="55"></input>
-        <p></p>
-        <input class="ach" id="ach_16" type="button" onclick="ach_f(16)" value="16"></input>
-        <input class="ach" id="ach_26" type="button" onclick="ach_f(26)" value="26"></input>
-        <input class="ach" id="ach_36" type="button" onclick="ach_f(36)" value="36"></input>
-        <input class="ach" id="ach_46" type="button" onclick="ach_f(46)" value="46"></input>
-        <input class="ach" id="ach_56" type="button" onclick="ach_f(56)" value="56"></input>
-        <p></p>
-        <input class="ach" id="ach_17" type="button" onclick="ach_f(17)" value="17"></input>
-        <input class="ach" id="ach_27" type="button" onclick="ach_f(27)" value="27"></input>
-        <input class="ach" id="ach_37" type="button" onclick="ach_f(37)" value="37"></input>
-        <input class="ach" id="ach_47" type="button" onclick="ach_f(47)" value="47"></input>
-        <input class="ach" id="ach_57" type="button" onclick="ach_f(57)" value="57"></input>
-        <p></p>
-        <input class="ach" id="ach_18" type="button" onclick="ach_f(18)" value="18"></input>
-        <input class="ach" id="ach_28" type="button" onclick="ach_f(28)" value="28"></input>
-        <input class="ach" id="ach_38" type="button" onclick="ach_f(38)" value="38"></input>
-        <input class="ach" id="ach_48" type="button" onclick="ach_f(48)" value="48"></input>
-        <input class="ach" id="ach_58" type="button" onclick="ach_f(58)" value="58"></input>
-        <p></p>
-        <input class="ach" id="ach_19" type="button" onclick="ach_f(19)" value="19"></input>
-        <input class="ach" id="ach_29" type="button" onclick="ach_f(29)" value="29"></input>
-        <input class="ach" id="ach_39" type="button" onclick="ach_f(39)" value="39"></input>
-        <input class="ach" id="ach_49" type="button" onclick="ach_f(49)" value="49"></input>
-        <input class="ach" id="ach_59" type="button" onclick="ach_f(59)" value="59"></input>
-        <p></p>
-        <input class="ach" id="ach_10" type="button" onclick="ach_f(10)" value="10"></input>
-        <input class="ach" id="ach_20" type="button" onclick="ach_f(20)" value="20"></input>
-        <input class="ach" id="ach_30" type="button" onclick="ach_f(30)" value="30"></input>
-        <input class="ach" id="ach_40" type="button" onclick="ach_f(40)" value="40"></input>
-        <input class="ach" id="ach_50" type="button" onclick="ach_f(50)" value="50"></input>
-        <p id=ach_help></p>
-        <script>
-        var save_list=[], load_list=[], autosave=0;
-        var totalclicked=0, clickpoints=0, totalclickpoints=0, cpgain=1;
-        var contentunlockpricelist=[20,50,250,1000,5000,15000,100000,10**7,10**10], contentunlockpriceindex=0;
-        var up1lvl=0, up1price=50, up2lvl=0, up2price=200, up3lvl=0, up3price=450, up4lvl=0, up4price=5000, up5lvl=0, up5price=10000;
-        var generationpoints=0, gpgain=0;
-        var evolved=0, evolvepoints=0;
-        var maxlvl_upgrade1=15, maxlvl_upgrade2=7, maxlvl_upgrade3=10, maxlvl_upgrade4=5, maxlvl_upgrade5=5;
-        var ev_up1price=5, ev_up1lvl=0, ev_up2price=3, ev_up2lvl=0, ev_up3price=10, ev_up3lvl=0, ev_up4price=10, ev_up4lvl=0, ev_up5price=1, ev_up5lvl=0;
-        var cangeneratebrick=0, bricklist=[0,0,0,0,0,0], maxbricktier=0;
-        var ach_l=[], ach_d_l=new Array(200).fill(0);
-        load_stuffs();
-        function clickedbutton(){
-            clickpoints+=cpgain;
-            totalclickpoints+=cpgain;
-            totalclicked+=1;
-            if(ev_up2lvl==0){
-                update();
-            }
-            else{
-                if(Math.random()<=0.1*ev_up2lvl){
-                    generateGP();
-                }
-                else{
-                    update();
-                }
-            }
-        }
-        function generateGP(){
-            generationpoints+=gpgain;
-            update();
-        }
-        function upgrade1(){
-            if(clickpoints>=up1price && up1lvl<maxlvl_upgrade1){
-                clickpoints-=up1price;
-                up1lvl+=1;
-                up1price*=2;
-                update();
-            }
-        }
-        function upgrade2(){
-            if(clickpoints>=up2price && up2lvl<maxlvl_upgrade2){
-                clickpoints-=up2price;
-                up2lvl+=1;
-                up2price*=5;
-                update();
-            }
-        }
-        function upgrade3(){
-            if(clickpoints>=up3price && up3lvl<maxlvl_upgrade3){
-                clickpoints-=up3price;
-                up3lvl+=1;
-                up3price*=3;
-                update();
-            }
-        }
-        function upgrade4(){
-            if(clickpoints>=up4price && up4lvl<maxlvl_upgrade4){
-                clickpoints-=up4price;
-                up4lvl+=1;
-                up4price*=10;
-                update();
-            }
-        }
-        function upgrade5(){
-            if(clickpoints>=up5price && up5lvl<maxlvl_upgrade5){
-                clickpoints-=up5price;
-                up5lvl+=1;
-                up5price*=3;
-                update();
-            }
-        }
-        function ev_upgrade1(){
-            if(evolvepoints>=ev_up1price){
-                evolvepoints-=ev_up1price;
-                ev_up1lvl+=1;
-                ev_up1price*=2;
-                update();
-            }
-        }
-        function ev_upgrade2(){
-            if(evolvepoints>=ev_up2price && ev_up2lvl<=9){
-                evolvepoints-=ev_up2price;
-                ev_up2lvl+=1;
-                ev_up2price*=5;
-                update();
-            }
-        }
-        function ev_upgrade3(){
-            if(evolvepoints>=ev_up3price){
-                evolvepoints-=ev_up3price;
-                ev_up3lvl+=1;
-                ev_up3price*=10;
-                update();
-            }
-        }
-        function ev_upgrade4(){
-            if(evolvepoints>=ev_up4price){
-                evolvepoints-=ev_up4price;
-                ev_up4lvl+=1;
-                ev_up4price*=10;
-                update();
-            }
-        }
-        function ev_upgrade5(){
-            if(evolvepoints>=ev_up5price){
-                evolvepoints-=ev_up5price;
-                ev_up5lvl+=1;
-                ev_up5price*=2;
-                update();
-            }
-        }
-        function evolve(){
-            if(clickpoints>=10000000){
-                contentunlockpriceindex=0;
-                up1lvl=0;
-                up2lvl=0;
-                up3lvl=0;
-                up4lvl=0;
-                up5lvl=0;
-                up1price=50;
-                up2price=200;
-                up3price=450;
-                up4price=5000;
-                up5price=10000;
-                evolvepoints+=Math.round(Math.log(clickpoints)/Math.LN10);
-                clickpoints=bricklist[2]*1000;
-                totalclickpoints=bricklist[2]*1000;
-                evolved=1;
-                update()
-            }
-        }
-        function brickmerge(_index){
-            if(bricklist[_index]>=10){
-                bricklist[_index]-=10;
-                bricklist[_index+1]+=1;
-                if(maxbricktier<_index+1){
-                    maxbricktier=_index+1;
-                }
-            }
-            update()
-        }
-        function expo(_value){
-            if(_value>=1000000){
-                return _value.toExponential(2)
-            }
-            else{
-                return _value
-            }
-        }
-        function save_stuffs(){
-            save_list=[totalclicked,clickpoints,totalclickpoints,up1lvl,up2lvl,up3lvl,up4lvl,up5lvl,up1price,up2price,up3price,up4price,up5price,generationpoints*100,evolved,evolvepoints,ev_up1lvl,ev_up2lvl,ev_up3lvl,ev_up4lvl,ev_up5lvl,ev_up1price,ev_up2price,ev_up3price,ev_up4price,ev_up5price,cangeneratebrick,bricklist,maxbricktier,autosave];
-            localStorage.setItem('save_fnts',btoa(save_list))
-        }
-        function load_stuffs(){
-            load_list=localStorage.getItem('save_fnts');
-            if(load_list){
-            load_list=atob(load_list).split(',').map(function(item){
-                return parseInt(item,10);
-            })
-                totalclicked=load_list[0]
-                clickpoints=load_list[1]
-                totalclickpoints=load_list[2]
-                up1lvl=load_list[3]
-                up2lvl=load_list[4]
-                up3lvl=load_list[5]
-                up4lvl=load_list[6]
-                up5lvl=load_list[7]
-                up1price=load_list[8]
-                up2price=load_list[9]
-                up3price=load_list[10]
-                up4price=load_list[11]
-                up5price=load_list[12]
-                generationpoints=load_list[13]/100
-                evolved=load_list[14]
-                evolvepoints=load_list[15]
-                ev_up1lvl=load_list[16]
-                ev_up2lvl=load_list[17]
-                ev_up3lvl=load_list[18]
-                ev_up4lvl=load_list[19]
-                ev_up5lvl=load_list[20]
-                ev_up1price=load_list[21]
-                ev_up2price=load_list[22]
-                ev_up3price=load_list[23]
-                ev_up4price=load_list[24]
-                ev_up5price=load_list[25]
-                cangeneratebrick=load_list[26]
-                bricklist=load_list.slice(27,33)
-                maxbricktier=load_list[33]
-                autosave=load_list[34]
-                update()
-            }
-        }
-        (function autoclick(){
-            if(ev_up5lvl>=1){
-                clickedbutton();
-            }
-            timer=setTimeout(autoclick,ev_up5lvl>=1?(10000/(ev_up5lvl*(0.01*bricklist[1]+1))):100);
-        })();
-        (function autobrick(){
-            if(cangeneratebrick){
-                generatebrick();
-            }
-            timer2=setTimeout(autobrick,100000/(100+Math.sqrt(bricklist[4])**1.3*10));
-        })();
-        (function autosave_f(){
-            if(autosave){
-                save_stuffs();
-            }
-            timer3=setTimeout(autosave_f,10000)
-        })();
-        function generatebrick(){
-            bricklist[0]+=(1+bricklist[5]);
-            update();
-        }
-        function ach_f(_x){
-            if(_x==11){document.getElementById("ach_help").innerHTML = ach_d_l[11]==0?"reach 5 total CP. reward: shows you your total CP.":"reach 5 total CP. completed! reward: shows you your total CP.";}
-            else if(_x==12){document.getElementById("ach_help").innerHTML = ach_d_l[12]==0?"reach 20 total CP. reward: shows you how much have you clicked.":"reach 20 total CP. completed! reward: shows you how much have you clicked.";}
-            else if(_x==13){document.getElementById("ach_help").innerHTML = ach_d_l[13]==0?"reach 50 total CP. reward: allowes you to save.":"reach 50 total CP. completed! reward: allowes you to save.";}
-            else if(_x==14){document.getElementById("ach_help").innerHTML = ach_d_l[14]==0?"reach 250 total CP. reward: shows you achievements.":"reach 250 total CP. completed! reward: shows you achievements.";}
-            else if(_x==16){document.getElementById("ach_help").innerHTML = ach_d_l[15]==0?"reach 5000 total CP. reward: allows you to auto-save.":"reach 5000 total CP. completed! reward: allowes you to auto-save.";}
-            else if(_x==16){document.getElementById("ach_help").innerHTML = ach_d_l[16]==0?"reach 1e+7 total CP. reward: there is new reset tier: EVOLVE.":"reach 1e+7 total CP. completed! reward: there is new reset tier: EVOLVE.";}
-            else if(_x==17){document.getElementById("ach_help").innerHTML = ach_d_l[17]==0?"reach 1e+10 total CP. reward: unlock bricks.":"reach 1e+10 total CP. completed! reward: unlock bricks.";}
-            else{
-                document.getElementById("ach_help").innerHTML = "it's work in progress"
-            }
-        }
-        function update(){
-            cpgain=Math.round(((1+up1lvl*(up2lvl*(ev_up3lvl*0.25+1)+bricklist[3]+1))+up3lvl*10)*((generationpoints*(1+up5lvl*0.5)+1))*(Math.sqrt(evolvepoints)+1)*(bricklist[0]*0.01+1));
-            gpgain=up4lvl*0.01;
-            maxlvl_upgrade1=15+ev_up1lvl;
-            maxlvl_upgrade2=7+ev_up1lvl;
-            maxlvl_upgrade3=10+ev_up1lvl;
-            maxlvl_upgrade4=5+ev_up1lvl;
-            maxlvl_upgrade5=5+ev_up1lvl;
-            if(totalclickpoints>=contentunlockpricelist[contentunlockpriceindex]){
-                contentunlockpriceindex+=1;
-                if(contentunlockpriceindex<contentunlockpricelist.length){
-                    if(evolved){
-                        document.getElementById("r4").innerHTML = "next content unlocked at "+expo(contentunlockpricelist[contentunlockpriceindex])+" total click points. (since you evolved, some stuffs are already unlocked)";
-                    }
-                    else{
-                        document.getElementById("r4").innerHTML = "next content unlocked at "+expo(contentunlockpricelist[contentunlockpriceindex])+" total click points.";
-                    }
-                    update()
-                }
-                else{
-                    document.getElementById("r4").innerHTML = "you have unlocked every contents (for now!)";
-                }
-            }
-            document.getElementById("r1").innerHTML = "you have "+expo(clickpoints)+" Click Points. (+"+expo(cpgain)+"/Click)";
-            if(totalclickpoints>=5 || evolved){
-                document.getElementById("r2").innerHTML = "you have "+expo(totalclickpoints)+" Total Click Points.";
-            }
-            if(totalclickpoints>=20 || evolved){
-                document.getElementById("r3").innerHTML = "you have clicked the button total of "+expo(totalclicked)+" times.";
-            }
-            if(totalclickpoints>=50){
-                if(up1lvl<maxlvl_upgrade1){
-                    document.getElementById("u1").innerHTML = "increase cp gain by "+ (ev_up3lvl==0?up2lvl+bricklist[3]+1:((ev_up3lvl*0.25+1)*up2lvl+bricklist[3]+1).toFixed(2)) +" per level (current: +" + Math.round(up1lvl*(up2lvl*(ev_up3lvl*0.25+1)+1)) + ") price: "+expo(up1price);
-                }
-                else{
-                    document.getElementById("u1").innerHTML = "increase cp gain by "+ (ev_up3lvl==0?up2lvl+bricklist[3]+1:((ev_up3lvl*0.25+1)*up2lvl+bricklist[3]+1).toFixed(2)) +" per level (current: +" + Math.round(up1lvl*(up2lvl*(ev_up3lvl*0.25+1)+1)) + ") (MAX LEVEL)";
-                }
-                document.getElementById("u1_b").style.visibility='visible';
-            }
-            else{
-                document.getElementById("u1").innerHTML = "";
-                document.getElementById("u1_b").style.visibility='hidden';
-            }
-            if(totalclickpoints>=250){
-                if(up2lvl<maxlvl_upgrade2){
-                    document.getElementById("u2").innerHTML = "increase upgrade 1 efficiency by "+(ev_up3lvl==0?1:(ev_up3lvl*0.25+1).toFixed(2))+" per level (current: +" + (ev_up3lvl==0?up2lvl:((ev_up3lvl*0.25+1)*up2lvl).toFixed(2)) + ") price: "+expo(up2price);
-                }
-                else{
-                    document.getElementById("u2").innerHTML = "increase upgrade 1 efficiency by "+(ev_up3lvl==0?1:(ev_up3lvl*0.25+1).toFixed(2))+" per level (current: +" + (ev_up3lvl==0?up2lvl:((ev_up3lvl*0.25+1)*up2lvl).toFixed(2)) + ") (MAX LEVEL)";
-                }
-                document.getElementById("u2_b").style.visibility='visible';
-            }
-            else{
-                document.getElementById("u2").innerHTML = "";
-                document.getElementById("u2_b").style.visibility='hidden';
-            }
-            if(totalclickpoints>=1000){
-                if(up3lvl<maxlvl_upgrade3){
-                    document.getElementById("u3").innerHTML = "increase cp gain by 10 per level (current: +"+(up3lvl*10)+") price: "+expo(up3price);
-                }
-                else{
-                    document.getElementById("u3").innerHTML = "increase cp gain by 10 per level (current: +"+(up3lvl*10)+") (MAX LEVEL)";
-                }
-                document.getElementById("u3_b").style.visibility='visible';
-            }
-            else{
-                document.getElementById("u3").innerHTML = "";
-                document.getElementById("u3_b").style.visibility='hidden';
-            }
-            if(totalclickpoints>=15000){
-                if(up4lvl<maxlvl_upgrade4){
-                    document.getElementById("u4").innerHTML = up4lvl==0?"allowes you to get generation points! (GP boosts CP gain) price: 5000":"increase GP gain per click by 0.01 per level (current: " + (up4lvl*0.01) + ") price: "+expo(up4price);
-                }
-                else{
-                    document.getElementById("u4").innerHTML = "increase GP gain by 0.01 per level (current: " + (up4lvl*0.01) + ") (MAX LEVEL)";
-                }
-                document.getElementById("u4_b").style.visibility='visible';
-            }
-            else{
-                document.getElementById("u4").innerHTML = "";
-                document.getElementById("u4_b").style.visibility='hidden';
-            }
-            if(totalclickpoints>=100000){
-                if(up5lvl<maxlvl_upgrade5){
-                    document.getElementById("u5").innerHTML = "increase GP efficiency by .5 per level (current: +"+(0.5*up5lvl)+") price: "+expo(up5price);
-                }
-                else{
-                    document.getElementById("u5").innerHTML = "increase GP efficiency by .5 per level (current: +"+(0.5*up5lvl)+") (MAX LEVEL)";
-                }
-                document.getElementById("u5").innerHTML = "increase GP efficiency by .5 per level (current: +"+(0.5*up5lvl)+") price: "+up5price;
-                document.getElementById("u5_b").style.visibility='visible';
-            }
-            else{
-                document.getElementById("u5").innerHTML = "";
-                document.getElementById("u5_b").style.visibility='hidden';
-            }
-            if(totalclickpoints>=10000000){
-                document.getElementById("evo").style.visibility='visible';
-                document.getElementById("evo_t").innerHTML = "reset all your progression to get "+(Math.round(Math.log(clickpoints)/Math.LN10))+" Evolve Points. (EP boosts CP gain)";
-            }
-            else if(evolved){
-                document.getElementById("evo").style.visibility='visible';
-                document.getElementById("evo_t").innerHTML = "you need at least 1e+7 CP to evolve.";
-            }
-            if(up4lvl!=0){
-                document.getElementById("g0").innerHTML = "you have "+generationpoints.toFixed(2)+" Generation Points.";
-                document.getElementById("g0_b").style.visibility='visible';
-            }
-            else if(evolved){
-                document.getElementById("g0").innerHTML = "you have "+generationpoints.toFixed(2)+" Generation Points. (buy upgrade 4 to gain)";
-                document.getElementById("g0_b").style.visibility='hidden';
-            }
-            if(evolved){
-                document.getElementById("r5").innerHTML = "you have "+expo(evolvepoints)+" Evolve Points.";
-                document.getElementById("r6").innerHTML = "your EP boosts CP gain by "+((Math.sqrt(evolvepoints)).toFixed(2))+".";
-                document.getElementById("ue0").innerHTML = "Evolve Upgrades don't reset on evolve.";
-                document.getElementById("ue1").innerHTML = "increase CP upgrades' max level by 1 each (current: +"+ev_up1lvl+") price: "+ev_up1price+" EP";
-                if(ev_up2lvl<=9){
-                    document.getElementById("ue2").innerHTML = "generating CP has 10% more chance to generate GP (need to buy upgrade 4) (current: "+ev_up2lvl*10+"%) price: "+ev_up2price+" EP";
-                }
-                else{
-                    document.getElementById("ue2").innerHTML = "generating CP has 10% more chance to generate GP (need to buy upgrade 4) (current: 100%) (MAX LEVEL)";
-                }
-                document.getElementById("ue3").innerHTML = "increase upgrade 2 efficiency by .25 per level (current: +"+(ev_up3lvl*0.25).toFixed(2)+") price: "+ev_up3price+" EP";
-                document.getElementById("ue4").innerHTML = "increase EP gain base by 1 per level (additive) (current: +"+ev_up4lvl+") price: "+ev_up4price+" EP";
-                document.getElementById("ue5").innerHTML = "allowes you to auto click (once per 10s per level) (current: "+ev_up5lvl+"/10s) price: "+ev_up5price+" EP";
-                document.getElementById("ue1_b").style.visibility='visible';
-                document.getElementById("ue2_b").style.visibility='visible';
-                document.getElementById("ue3_b").style.visibility='visible';
-                document.getElementById("ue4_b").style.visibility='visible';
-                document.getElementById("ue5_b").style.visibility='visible';
-            }
-            if(cangeneratebrick || totalclickpoints>=10**10){
-                cangeneratebrick=1;
-                document.getElementById("b0").innerHTML = "you gain "+(bricklist[5]+1)+" brick every "+(100/(100+Math.sqrt(bricklist[4])**1.3*10)).toFixed(2)+" second(s). each brick 'building' gives you different effect.";
-                document.getElementById("b1").innerHTML = "you have "+bricklist[0]+" bricks. it makes you generate "+bricklist[0]+"% more CP.";
-                document.getElementById("b1_b").style.visibility='visible';
-                if(maxbricktier>=1){
-                document.getElementById("b2").innerHTML = "you have "+bricklist[1]+" heaps. it makes your auto CP generation "+bricklist[1]+"% faster.";
-                document.getElementById("b2_b").style.visibility='visible';
-                }
-                if(maxbricktier>=2){
-                document.getElementById("b3").innerHTML = "you have "+bricklist[2]+" walls. it makes you to have "+bricklist[2]*1000+" CP when you evolve.";
-                document.getElementById("b3_b").style.visibility='visible';
-                }
-                if(maxbricktier>=3){
-                document.getElementById("b4").innerHTML = "you have "+bricklist[3]+" walls. it boosts upgrade 1 efficiency by "+bricklist[3]+". (additive to upgrade 2)";
-                document.getElementById("b4_b").style.visibility='visible';
-                }
-                if(maxbricktier>=4){
-                document.getElementById("b5").innerHTML = "you have "+bricklist[4]+" cities. it makes you generate bricks "+(Math.sqrt(bricklist[4])**1.3*10).toFixed(2)+"% faster.";
-                document.getElementById("b5_b").style.visibility='visible';
-                }
-                if(maxbricktier>=5){
-                document.getElementById("b6").innerHTML = "you have "+bricklist[5]+" countries. it makes you generate "+bricklist[5]+" more bricks per brick gain";
-                }
-            }
-            if(clickpoints>=50 || evolved){
-                document.getElementById("sv").style.visibility='visible';
-            }
-            if(clickpoints>=5000 || evolved){
-                document.getElementById("a_sv").style.visibility='visible';
-                document.getElementById("a_sv_v").innerHTML = 'autosave: '+(autosave?'on':'off');
-            }
-            if(clickpoints>=250 || evolved){
-                document.getElementById("ach_ls").style.visibility='visible';
-                ach_l=document.getElementsByClassName("ach");
-                for(i=0;i<ach_l.length;++i){
-                    ach_l[i].style.visibility='visible';
-                }
-            }
-            //achievement count
-            if(clickpoints>=5){
-                ach_d_l[11]=1;
-                document.getElementById("ach_11").style.background="#3cb43c";
-                document.getElementById("ach_11").style.color="black";
-            }
-            if(clickpoints>=20){
-                ach_d_l[12]=1;
-                document.getElementById("ach_12").style.background="#3cb43c";
-                document.getElementById("ach_12").style.color="black";
-            }
-            if(clickpoints>=50){
-                ach_d_l[13]=1;
-                document.getElementById("ach_13").style.background="#3cb43c";
-                document.getElementById("ach_13").style.color="black";
-            }
-            if(clickpoints>=250){
-                ach_d_l[14]=1;
-                document.getElementById("ach_14").style.background="#3cb43c";
-                document.getElementById("ach_14").style.color="black";
-            }
-            if(clickpoints>=5000){
-                ach_d_l[15]=1;
-                document.getElementById("ach_15").style.background="#3cb43c";
-                document.getElementById("ach_15").style.color="black";
-            }
-            if(clickpoints>=10**7){
-                ach_d_l[16]=1;
-                document.getElementById("ach_16").style.background="#3cb43c";
-                document.getElementById("ach_16").style.color="black";
-            }
-            if(clickpoints>=10**10){
-                ach_d_l[17]=1;
-                document.getElementById("ach_17").style.background="#3cb43c";
-                document.getElementById("ach_17").style.color="black";
-            }
-        }
-        function cheat(){
-            clickpoints+=10**10;
-            totalclickpoints+=10**10;
-            evolvepoints+=10**6;
-            evolved=1;
-            bricklist[0]+=10**5;
-            update()
-        }
-        </script>
-    </body>
-</html>
+Update Log
+
+Pre-Alpha 1
+* the game is here!
+Pre-Alpha 1.1
+* you can gain click points!
+Pre-Alpha 1.2
+* there now is 'total click points'
+* there now is 'you clicked the button total of * times'
+Pre-Alpha 1.3
+* there is 2 new upgrades
+Pre-Alpha 1.4
+* there is 1 new upgrade
+Pre-Alpha 1.5
+* there is new currency 'GP'
+* there is 2 new upgrades
+* there is now 'content unlock'
+Pre-Alpha 1.6
+* bugfixes
+Pre-Alpha 1.7
+* now the contents are unlocked by total click points (it was total clicks before)
+Pre-Alpha 1.8
+* Bugfixes
+Pre-Alpha 1.9
+* now the button is hidden before unlock!
+Pre-Alpha 1.10
+* bugfixes
+Pre-Alpha 1.11
+* balancing
+
+Pre-Alpha 2.0
+* there is new currency 'EP'
+* there is new reset tier: evolve
+Pre-Alpha 2.1
+* balancing
+Pre-Alpha 2.2
+* bugfixes
+* balancing
+* function cheat() for test
+Pre-Alpha 2.3
+* there is max level for click upgrades now
+* there is 1 new (evolve) upgrade
+Pre-Alpha 2.4
+* bugfixes
+Pre-Alpha 2.5
+* bugfixes
+Pre-Alpha 2.6
+* bugfixes
+Pre-Alpha 2.7
+* balancing
+Pre-Alpha 2.8
+* there is 2 new (evolve) upgrades
+* cheat() got more powerful
+Pre-Alpha 2.9
+* bugfixes
+* cheat() got even more powerful
+Pre-Alpha 2.10
+* bugfixes
+Pre-Alpha 2.11
+* bugfixes
+Pre-Alpha 2.12
+* bugfixes
+Pre-Alpha 2.13
+* bugfixes
+Pre-Alpha 2.14
+* bugfixes
+* cheat() now does update as well
+Pre-Alpha 2.15
+* now evolve upgrade 2 has max level
+Pre-Alpha 2.16
+* spots for 2 new evolve upgrades
+* now the game supports exponent (for 1M+)
+Pre-Alpha 2.17
+* 2 new evolve upgrades
+* added "AUTOMATION"
+Pre-Alpha 2.18
+* bugfixes
+Pre-Alpha 2.19
+* bugfixes
+Pre-Alpha 2.20
+* now 'next content unlock-' uses exponent
+Pre-Alpha 2.21
+* new currency 'Brick'
+Pre-Alpha 2.22
+* there are 3 brick buildings
+Pre-Alpha 2.23
+* bugfixes
+* there are 2 new brick buildings
+Pre-Alpha 2.24
+* bugfixes
+Pre-Alpha 2.25
+* bugfixes
+Pre-Alpha 2.26
+* there is 1 new brick buildings
+Pre-Alpha 2.27
+* SAVE SYSTEM
+* bugfixes
+Pre-Alpha 2.28
+* bugfixes
+Pre-Alpha 2.29
+* bugfixes
+Pre-Alpha 2.30
+* bugfixes
+Pre-Alpha 2.31
+* bugfixes
+Pre-Alpha 2.32
+* now the SAVE is encrypted
+Pre-Alpha 2.33
+* auto-load
+Pre-Alpha 2.34
+* auto-save (needs to unlock the strat for it) (every 10 secs)
+Pre-Alpha 2.35
+* bugfixes
+Pre-Alpha 2.36
+* bugfixes (includes important bug with save system)
+Pre-Alpha 2.37
+* now brick merge buttons are vertical
+Pre-Alpha 2.38
+* fixed problem cp gain not exponential
+Pre-Alpha 2.39
+* bugfixes (note that too many bugs exist that i cant even breathe)
+Pre-Alpha 2.40
+* bugfixes
+Pre-Alpha 2.41
+* bugfixes
+
+Pre-Alpha 3.0
+* ACHIEVEMENTS
+* 7 new achievements
