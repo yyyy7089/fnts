@@ -321,9 +321,9 @@
         function load_stuffs(){
             load_list=localStorage.getItem('save_fnts');
             if(load_list){
-            load_list=atob(load_list).split(',').map(function(item){
-                return parseInt(item,10);
-            })
+                load_list=atob(load_list).split(',').map(function(item){
+                    return parseInt(item,10);
+                })
                 totalclicked=load_list[0]
                 clickpoints=load_list[1]
                 totalclickpoints=load_list[2]
@@ -384,7 +384,7 @@
             else if(_x==12){document.getElementById("ach_help").innerHTML = ach_d_l[12]==0?"reach 20 total CP. reward: shows you how much have you clicked.":"reach 20 total CP. completed! reward: shows you how much have you clicked.";}
             else if(_x==13){document.getElementById("ach_help").innerHTML = ach_d_l[13]==0?"reach 50 total CP. reward: allowes you to save.":"reach 50 total CP. completed! reward: allowes you to save.";}
             else if(_x==14){document.getElementById("ach_help").innerHTML = ach_d_l[14]==0?"reach 250 total CP. reward: shows you achievements.":"reach 250 total CP. completed! reward: shows you achievements.";}
-            else if(_x==16){document.getElementById("ach_help").innerHTML = ach_d_l[15]==0?"reach 5000 total CP. reward: allows you to auto-save.":"reach 5000 total CP. completed! reward: allowes you to auto-save.";}
+            else if(_x==15){document.getElementById("ach_help").innerHTML = ach_d_l[15]==0?"reach 5000 total CP. reward: allows you to auto-save.":"reach 5000 total CP. completed! reward: allowes you to auto-save.";}
             else if(_x==16){document.getElementById("ach_help").innerHTML = ach_d_l[16]==0?"reach 1e+7 total CP. reward: there is new reset tier: EVOLVE.":"reach 1e+7 total CP. completed! reward: there is new reset tier: EVOLVE.";}
             else if(_x==17){document.getElementById("ach_help").innerHTML = ach_d_l[17]==0?"reach 1e+10 total CP. reward: unlock bricks.":"reach 1e+10 total CP. completed! reward: unlock bricks.";}
             else{
