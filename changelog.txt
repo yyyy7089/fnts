@@ -127,3 +127,6 @@ Pre-Alpha 2.41
 Pre-Alpha 3.0
 * ACHIEVEMENTS
 * 7 new achievements
+* brick buttons are now inline
+Pre-Alpha 3.1
+* bugfixes
